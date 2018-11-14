@@ -1,7 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
+const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 module.exports = {
+  plugins: [
+    new NpmInstallPlugin({
+      save: true, // --save
+      yarn: true
+    })
+  ],
   entry: {
     'material-ui': path.join(__dirname, './src/index.js'),
   },
