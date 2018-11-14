@@ -1,29 +1,9 @@
 import React from 'react';
 import AutoComplete from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
-const dataSource1 = [
-  {
-    text: 'text-value1',
-    value: (
-      <MenuItem
-        primaryText="text-value1"
-        secondaryText="&#9786;"
-      />
-    ),
-  },
-  {
-    text: 'text-value2',
-    value: (
-      <MenuItem
-        primaryText="text-value2"
-        secondaryText="&#9786;"
-      />
-    ),
-  },
-];
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
 const dataSource2 = [
   'facebook.com',
@@ -38,28 +18,35 @@ const dataSource2 = [
   'yahoo.com',
 ];
 
-const dataSource3 = [
-  {textKey: 'Some Text', valueKey: 'someFirstValue'},
-  {textKey: 'Some Text', valueKey: 'someSecondValue'},
-];
-const dataSourceConfig = {
-  text: 'textKey',
-  value: 'valueKey',
-};
+const styles = theme => ({
+  webAddress: {
+    paddingTop: theme.spacing.unit * 5,
+    paddingBottom: theme.spacing.unit * 5,
+    paddingLeft: theme.spacing.unit * 5,
+    paddingRight: theme.spacing.unit * 5,
+  },
+});
 
 /**
  * The first example has `MenuItem`s in its data source that display on data entry.
  * The second example uses an array of values as its `dataSource`, and updates on focus.
  * Both examples have filtering disabled.
  */
-const WebAddress = () => (
-  <div>
+function WebAddress(props) {
+  const { classes } = props;
+
+  return (
+  <div class={classes.webAddress}>
     <TextField
       floatingLabelText="Key in web address here"
       filter={AutoComplete.noFilter}
       openOnFocus={true}
       dataSource={dataSource2}
     /><br />
+    <br />
+    <br />
+    <br />
+    <br />
     <Typography variant="h3" gutterBottom>
         Is website.com accessible?
     </Typography>
@@ -67,6 +54,11 @@ const WebAddress = () => (
       Yes, website.com is accessible
     </Typography>
   </div>
-);
+  )
+};
 
-export default WebAddress;
+WebAddress.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(WebAddress);

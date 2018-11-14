@@ -1,15 +1,26 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import WebAddress from './WebAddress';
 
 
-const styles = {
+const styles = theme => ({
+  text: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+  },
+  paper: {
+    paddingBottom: 500,
+  },
   root: {
     flexGrow: 1,
   },
@@ -20,13 +31,14 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+});
 
 function SimpleAppBar(props) {
   const { classes } = props;
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
+      <CssBaseline />
       <AppBar position="static">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -38,7 +50,10 @@ function SimpleAppBar(props) {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-    </div>
+      <Paper square className={classes.paper}>
+        <WebAddress/>
+      </Paper>
+    </React.Fragment>
   );
 }
 
