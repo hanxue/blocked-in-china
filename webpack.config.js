@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  // entry: './src/index.js',
   entry: {
     'material-ui': path.join(__dirname, './src/index.js'),
   },
@@ -13,10 +12,15 @@ module.exports = {
   },
   module: {
     rules: [{
-      loader: 'babel-loader',
-      test: /\.js$/,
-      exclude: /node_modules/
-      }, {
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      },
+    }, {
       test: /\.css$/,
       use: [
         'style-loader',
