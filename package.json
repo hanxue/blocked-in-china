@@ -1,0 +1,41 @@
+{
+  "name": "blocked-in-china",
+  "version": "0.0.1",
+  "description": "Check if a website is blocked in China",
+  "keywords": [
+    "react",
+    "react-component",
+    "material design",
+    "material-ui",
+    "webpack"
+  ],
+  "author": "Lee Hanxue <hanxue@github.io>",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@material-ui/core": "^3.5.1",
+    "@material-ui/icons": "^3.0.1",
+    "@material-ui/lab": "^3.0.0-alpha.23",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  },
+  "devDependencies": {
+    "@angular/cli": "^7.0.5",
+    "react-scripts": "^2.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
