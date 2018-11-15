@@ -2,6 +2,7 @@
   "name": "blocked-in-china",
   "version": "0.0.1",
   "description": "Check if a website is blocked in China",
+  "homepage" : "http://hanxue.github.io/blocked-in-china",
   "keywords": [
     "react",
     "react-component",
@@ -43,6 +44,7 @@
     "dev": "webpack-dev-server",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
