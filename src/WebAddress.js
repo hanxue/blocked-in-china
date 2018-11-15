@@ -1,4 +1,5 @@
 import React from 'react';
+import './WebAddress.css';
 import TextField from '@material-ui/core/TextField';
 import deburr from 'lodash/deburr';
 import keycode from 'keycode';
@@ -24,7 +25,7 @@ const suggestions = [
 ];
 
 function renderInput(inputProps) {
-  const { InputProps, classes, ref, ...other } = inputProps;
+  const { InputProps, defaultDomain, classes, ref, ...other } = inputProps;
 
   return (
     <TextField
@@ -37,6 +38,8 @@ function renderInput(inputProps) {
         ...InputProps,
       }}
       {...other}
+      variant="outlined"
+      defaultValue={defaultDomain}
     />
   );
 }
@@ -111,6 +114,7 @@ const styles = theme => ({
   },
   inputRoot: {
     flexWrap: 'wrap',
+    variant: 'outlined',
   },
   inputInput: {
     width: 'auto',
@@ -121,61 +125,79 @@ const styles = theme => ({
   },
 });
 
-function WebAddress(props) {
-  const { classes } = props;
+class WebAddress extends React.Component {
+  state = {
+    domain: 'yahoo.com',
+    accessible: true,
+    stateText: {
+      true: 'is accessible',
+      false: 'is not accessible',
+    }
+  };
 
-  return (
-    <div className={classes.root}>
-      <Downshift id="downshift-simple">
-        {({
-          getInputProps,
-          getItemProps,
-          getMenuProps,
-          highlightedIndex,
-          inputValue,
-          isOpen,
-          selectedItem,
-        }) => (
-          <div className={classes.container}>
-            {renderInput({
-              fullWidth: true,
-              classes,
-              InputProps: getInputProps({
-                placeholder: 'Check a website or URL',
-              }),
-            })}
-            <div {...getMenuProps()}>
-              {isOpen ? (
-                <Paper className={classes.paper} square>
-                  {getSuggestions(inputValue).map((suggestion, index) =>
-                    renderSuggestion({
-                      suggestion,
-                      index,
-                      itemProps: getItemProps({ item: suggestion.label }),
-                      highlightedIndex,
-                      selectedItem,
-                    }),
-                  )}
-                </Paper>
-              ) : null}
+  render() {
+    const { classes, onClose, selectedValue, ...other } = this.props;
+    return (
+      <div className={classes.root}>
+        <Downshift
+        id="downshift-simple"
+        onChange={selection => this.setState({domain: selection, accessible: false})}
+        >
+          {({
+            getInputProps,
+            getItemProps,
+            getMenuProps,
+            highlightedIndex,
+            inputValue,
+            isOpen,
+            selectedItem,
+          }) => (
+            <div className={classes.container}>
+              {renderInput({
+                fullWidth: true,
+                defaultDomain: this.state.domain,
+                classes,
+                InputProps: getInputProps({
+                  placeholder: 'Check a website or URL',
+                }),
+              })}
+              <div {...getMenuProps()}>
+                {isOpen ? (
+                  <Paper className={classes.paper} square>
+                    {getSuggestions(inputValue).map((suggestion, index) => 
+                      renderSuggestion({
+                        suggestion,
+                        index,
+                        itemProps: getItemProps({ item: suggestion.label }),
+                        highlightedIndex,
+                        selectedItem,
+                      }),
+                    )}
+                  </Paper>
+                ) : null}
+              </div>
             </div>
-          </div>
-        )}
-      </Downshift>
-      <div className={classes.divider} />
-      <div className={classes.divider} />
-      <br />
-      <br />
-      <br />
-      <br />
-      <Typography variant="h3" gutterBottom>
-          Is website.com accessible?
-      </Typography>
-      <Typography variant="h4" gutterBottom>
-        Yes, website.com is accessible
-      </Typography>
-    </div>
-  );
+          )}
+        </Downshift>
+        <div className={classes.divider} />
+        <div className={classes.divider} />
+        <br />
+        <br />
+        <br />
+        <br />
+        <Typography variant="h3" gutterBottom>
+            Is {this.state.domain} accessible?
+        </Typography>
+        <Typography variant="h4" gutterBottom>
+        { this.state.accessible ? 'Yes' : 'No' }&nbsp;
+        <u><b>{this.state.domain}</b></u>&nbsp;
+          <span className={ this.state.accessible ? 'Accessible-yes' : 'Accessible-no' }>
+            {this.state.stateText[this.state.accessible]}
+          </span> .
+        </Typography>
+      </div>
+    );
+  }
 };
 
 WebAddress.propTypes = {
